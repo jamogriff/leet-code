@@ -3,7 +3,9 @@ import {
     two_sum,
     contains_duplicate,
     is_anagram,
-    group_anagrams
+    group_anagrams,
+    is_palindrome,
+    get_largest_palindrome
 } from '../src/arrays.ts';
 
 test('returns correct indicies of two sum problems', () => {
@@ -38,4 +40,23 @@ test('correctly groups anagrams', () => {
     let array = ['bling', 'ring', 'grin', 'bing', 'glinb']
     // TODO: this test could be better. Fails when order of expected elements is different
     expect(group_anagrams(array)).toStrictEqual([['bling', 'glinb'], ['ring', 'grin'], ['bing']])
+})
+
+test('correctly detects palindromes', () => {
+    let string = 'A man, a plan, a canal: Panama';
+    expect(is_palindrome(string)).toBe(true);
+
+    string = 'race a car';
+    expect(is_palindrome(string)).toBe(false);
+
+    string = ' ';
+    expect(is_palindrome(string)).toBe(true);
+})
+
+test('finds largest palindrome', () => {
+    let string = 'abacatac';
+    expect(get_largest_palindrome(string)).toBe('catac');
+
+//     string = 'aaabizzibizabba';
+//     expect(get_largest_palindrome(string)).toBe('bizzib');
 })

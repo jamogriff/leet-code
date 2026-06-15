@@ -1,20 +1,31 @@
 /*
- * TODO: should refactor/attempt again for more efficient solution
- */
-export function two_sum(array, targetSum) {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array.length; j++) {
-      if (i === j) {
-        continue;
-      }
+ * https://leetcode.com/problems/two-sum/description/
+* */
+export function two_sum(numbers, targetSum) {
+  let indexMap = new Map();
+  let coordinates = [];
 
-      if (array[i] + array[j] === targetSum) {
-        return [i, j];
-      }
+  for (let i = 0; i < numbers.length; i++) {
+    let number = numbers[i];
+    // Note: this doesn't work if duplicate numbers are present
+    indexMap.set(number, i);
+
+    let remainder = targetSum - number;
+
+    if (indexMap.has(remainder)) {
+      // we've encountered this number already
+      coordinates.push(indexMap.get(remainder));
+      coordinates.push(i);
+      break;
     }
   }
+
+  return coordinates;
 }
 
+/*
+ * https://leetcode.com/problems/contains-duplicate/description/
+ */
 export function contains_duplicate(array) {
   const elementsEncountered = new Set();
 
@@ -31,6 +42,9 @@ export function contains_duplicate(array) {
   return containsDuplicate;
 }
 
+/*
+ * https://leetcode.com/problems/valid-anagram/description/
+ */
 export function is_anagram(string1, string2) {
   if (string1.length !== string2.length) {
     return false;
@@ -48,6 +62,7 @@ export function is_anagram(string1, string2) {
 }
 
 /*
+ * https://leetcode.com/problems/group-anagrams/description/
  * TODO: should refactor/attempt again
  */
 export function group_anagrams(possibleAnagrams) {
@@ -94,3 +109,58 @@ export function group_anagrams(possibleAnagrams) {
   return groupedAnagrams;
 }
 
+/*
+ * https://leetcode.com/problems/valid-palindrome/description/
+ */
+export function is_palindrome(string) {
+  let noAlphanumericChars = string.replaceAll(/[\W]/g, '');
+  let processedString = noAlphanumericChars.toLowerCase();
+
+  let isPalindrome = true;
+  let backwardIndex = processedString.length - 1;
+  for (let forwardIndex = 0; forwardIndex < backwardIndex; forwardIndex++) {
+    if (processedString[forwardIndex] === processedString[backwardIndex]) {
+      backwardIndex--;
+      continue;
+    } else {
+      isPalindrome = false;
+      break;
+    }
+  }
+  return isPalindrome;
+}
+
+export function get_largest_palindrome(string) {
+  let palindromes = new Map();
+
+  // Iterate over every character in string
+  for (let i = 1; i < string.length; i++) {
+    let centralNode = string[i];
+    // Traverse outward with two pointers
+    let leftIndex = i - 1;
+    let rightIndex = i + 1;
+
+    if (string[leftIndex] === string[rightIndex]) {
+      // Record a new palindrome occurrence
+      palindromes.set(i, string.substring(leftIndex, rightIndex + 1)); // Confound you substring!
+    }
+
+    while (leftIndex >= 0 && rightIndex <= string.length - 1) {
+      if (string[leftIndex] === string[rightIndex]) {
+        // Update palindrome entry and continue traversing outward
+        palindromes.set(i, string.substring(leftIndex, rightIndex + 1))
+        leftIndex--;
+        rightIndex++;
+      } else {
+        break;
+      }
+    }
+  }
+
+  // Sort palindromes by length
+  let strings = [...palindromes.values()];
+  strings.sort((a, b) => a.length - b.length) 
+
+  // Return lengthiest one
+  return strings.pop();
+}
