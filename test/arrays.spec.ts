@@ -5,7 +5,8 @@ import {
     is_anagram,
     group_anagrams,
     is_palindrome,
-    get_largest_palindrome
+    get_largest_palindrome,
+    two_sum_sorted
 } from '../src/arrays.ts';
 
 test('returns correct indicies of two sum problems', () => {
@@ -57,6 +58,16 @@ test('finds largest palindrome', () => {
     let string = 'abacatac';
     expect(get_largest_palindrome(string)).toBe('catac');
 
+    // TODO: current solution fails here if palindrome center is between two characters
 //     string = 'aaabizzibizabba';
 //     expect(get_largest_palindrome(string)).toBe('bizzib');
+})
+
+test('returns correct indicies for target number', () => {
+    let numbers = [2,7,11,15];
+    expect(two_sum_sorted(numbers, 9)).toStrictEqual([1,2]);
+    numbers = [2,3,4];
+    expect(two_sum_sorted(numbers, 6)).toStrictEqual([1,3]);
+    numbers = [-1,0];
+    expect(two_sum_sorted(numbers, -1)).toStrictEqual([1,2]);
 })

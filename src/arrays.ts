@@ -130,6 +130,9 @@ export function is_palindrome(string) {
   return isPalindrome;
 }
 
+/**
+ * TODO: see test for improvement
+ */
 export function get_largest_palindrome(string) {
   let palindromes = new Map();
 
@@ -163,4 +166,26 @@ export function get_largest_palindrome(string) {
 
   // Return lengthiest one
   return strings.pop();
+}
+
+export function two_sum_sorted(numbers, target) {
+  let leftIndex = 0;
+  let rightIndex = numbers.length - 1;
+
+  while (leftIndex < rightIndex) {
+    let sum = numbers[leftIndex] + numbers[rightIndex];
+    if (sum === target) {
+      // Return each index of component numbers arbitrarily added by 1
+      return [leftIndex + 1, rightIndex + 1];
+    } else if (sum < target) {
+      // sum is too small -- point leftIndex to a higher figure
+      leftIndex++;
+    } else {
+      // sum is too large -- point rightIndex to a lower figure
+      rightIndex--;
+    }
+  }
+
+  // if we got here, nothing was found
+  return null;
 }
