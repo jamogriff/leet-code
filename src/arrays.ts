@@ -168,6 +168,9 @@ export function get_largest_palindrome(string) {
   return strings.pop();
 }
 
+/**
+ * https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/
+ */
 export function two_sum_sorted(numbers, target) {
   let leftIndex = 0;
   let rightIndex = numbers.length - 1;
@@ -188,4 +191,51 @@ export function two_sum_sorted(numbers, target) {
 
   // if we got here, nothing was found
   return null;
+}
+
+/*
+ * https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+ * TODO: better than O(n^2)
+ */
+export function max_profit(stock_prices) {
+  let max_profit = 0;
+
+  for (let i = 0; i < stock_prices.length; i++) {
+    for (let j = i + 1; j < stock_prices.length; j++) {
+      let sum = stock_prices[j] - stock_prices[i];
+      if (sum > max_profit) {
+        max_profit = sum;
+      }
+    }
+  }
+
+  return max_profit;
+}
+
+/*
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+ * TODO: better than O(n^2)
+ */
+export function longest_substring(string) {
+  let maxSubstring = '';
+
+  for (let i = 0; i < string.length; i++) {
+    let charactersSeen = [string[i]];
+    let longestSubstringFromIndex = string[i];
+
+    for (let j = i + 1; j < string.length; j++) {
+      if (charactersSeen.includes(string[j])) {
+        break;
+      } else {
+        charactersSeen.push(string[j]);
+        longestSubstringFromIndex = string.substring(i, j + 1);
+      }
+    }
+
+    if (longestSubstringFromIndex.length > maxSubstring.length) {
+      maxSubstring = longestSubstringFromIndex;
+    }
+  }
+
+  return maxSubstring.length;
 }

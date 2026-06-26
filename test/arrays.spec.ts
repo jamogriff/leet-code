@@ -6,7 +6,9 @@ import {
     group_anagrams,
     is_palindrome,
     get_largest_palindrome,
-    two_sum_sorted
+    two_sum_sorted,
+    max_profit,
+    longest_substring
 } from '../src/arrays.ts';
 
 test('returns correct indicies of two sum problems', () => {
@@ -70,4 +72,25 @@ test('returns correct indicies for target number', () => {
     expect(two_sum_sorted(numbers, 6)).toStrictEqual([1,3]);
     numbers = [-1,0];
     expect(two_sum_sorted(numbers, -1)).toStrictEqual([1,2]);
+})
+
+test('returns max profit in array of stock prices', () => {
+    let stock_prices = [7,1,5,3,6,4];
+    // Buy at 1 and sell at 6 (6-1=5)
+    expect(max_profit(stock_prices)).toBe(5);
+
+    stock_prices = [7,6,4,3,1];
+    // Every subsequent number is lower; no profit to be made
+    expect(max_profit(stock_prices)).toBe(0);
+})
+
+test('returns length of longest substring without duplicate characters', () => {
+    let input = 'abcabcbb';
+    expect(longest_substring(input)).toBe(3);
+
+    input = 'bbbbbbb';
+    expect(longest_substring(input)).toBe(1);
+
+    input = 'pwwkew';
+    expect(longest_substring(input)).toBe(3);
 })
